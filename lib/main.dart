@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//Screen dedicada al login de usuario.
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
