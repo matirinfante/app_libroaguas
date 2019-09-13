@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_libroaguas/Index.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 void main() => runApp(new MyApp());
@@ -8,6 +11,7 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return new MaterialApp(
       title: 'Libro de Aguas',
       theme: new ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
@@ -262,7 +266,10 @@ class _LoginScreenState extends State<LoginScreen>
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       color: Colors.lightBlueAccent[700],
-                      onPressed: () => {},
+                      onPressed: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Index()));
+                      },
                       child: new Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 20.0,
