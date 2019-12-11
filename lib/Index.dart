@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-import 'package:app_libroaguas/Rescate.dart';
+import 'package:app_libroaguas/IncidenteFlujo.dart';
 
 class Index extends StatefulWidget {
   _IndexState createState() => new _IndexState();
@@ -53,6 +53,7 @@ class _IndexState extends State<Index> {
   }
 
   Widget Index() {
+    //TODO: debe obtener la informacion del guardavidas de la BD de guardavidas y hacer los datos persistentes
     return Container(
       child: Column(
         children: <Widget>[
@@ -125,10 +126,57 @@ class _IndexState extends State<Index> {
   }
 
   Widget Registro() {
-    return Container(
-      child: Column(
-        children: <Widget>[MaterialButton()],
-      ),
+    return TabBarView(
+      controller: TabController(),
+      children: <Widget>[
+        RegistroIncidentes(),
+        RegistroPrevenciones(),
+      ],
     );
+  }
+
+  //TODO: Implementar GET registros
+  Widget RegistroIncidentes() {
+    return Expanded(
+        child: FutureBuilder<List<Incidente>>(
+            future: Registro.db.getIncidentes(),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Incidente>> snap) {
+              if (snap.hasData) {
+                return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: snap.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Incidente item = snapshot.data[index];
+                      return ListTile();
+                    });
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
+  }
+
+  Widget RegistroPrevenciones() {
+    return Expanded(
+        child: FutureBuilder<List<Prevencion>>(
+            future: Registro.db.getPrevenciones(),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Prevencion>> snap) {
+              if (snap.hasData) {
+                return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: snap.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Prevencion item = snap.data[index];
+                      return ListTile();
+                    });
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
   }
 }

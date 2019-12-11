@@ -8,6 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 void main() => runApp(new MyApp());
 
+//TODO: Implementar ThemeData para toda la aplicación.
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

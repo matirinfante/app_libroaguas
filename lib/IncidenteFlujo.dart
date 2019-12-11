@@ -16,7 +16,7 @@ class Rescate extends StatefulWidget {
 
 class _RescateState extends State<Rescate> {
   PageController _pageController = PageController(initialPage: 0);
-  List<RadioModel> tiposRescate = new List<RadioModel>();
+
   List<RadioModel> datosAsistencia = new List<RadioModel>();
   var _pageNames;
   int _page = 0;
@@ -24,12 +24,6 @@ class _RescateState extends State<Rescate> {
   @override
   void initState() {
     super.initState();
-    tiposRescate
-        .add(new RadioModel(false, Icons.done_outline, 'Rescate Simple', true));
-    tiposRescate.add(
-        new RadioModel(false, Icons.done_outline, 'Rescate Complicado', true));
-    tiposRescate.add(
-        new RadioModel(false, Icons.done_outline, 'Rescate Múltiple', true));
     datosAsistencia
         .add(new RadioModel(false, Icons.done_outline, 'RCP', false));
     datosAsistencia
@@ -96,30 +90,6 @@ class _RescateState extends State<Rescate> {
                 }),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget TipoRescate() {
-    return Container(
-      child: Center(
-        child: ListView.builder(
-            itemCount: tiposRescate.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new InkWell(
-                //highlightColor: Colors.red,
-                splashColor: Colors.grey[300],
-                onTap: () {
-                  setState(() {
-                    tiposRescate
-                        .forEach((element) => element.isSelected = false);
-                    tiposRescate[index].isSelected = true;
-                    widget.tipoRescate = tiposRescate[index].text;
-                  });
-                },
-                child: new RadioItem(tiposRescate[index]),
-              );
-            }),
       ),
     );
   }
@@ -529,4 +499,52 @@ class RadioModel {
   final bool radius;
 
   RadioModel(this.isSelected, this.icon, this.text, this.radius);
+}
+
+class TipoRescate extends StatefulWidget {
+  String tipoRescate;
+
+  @override
+  _TipoRescateState createState() => _TipoRescateState();
+}
+
+class _TipoRescateState extends State<TipoRescate> {
+  List<RadioModel> tiposRescate = new List<RadioModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    tiposRescate
+        .add(new RadioModel(false, Icons.done_outline, 'Rescate Simple', true));
+    tiposRescate.add(
+        new RadioModel(false, Icons.done_outline, 'Rescate Complicado', true));
+    tiposRescate.add(
+        new RadioModel(false, Icons.done_outline, 'Rescate Múltiple', true));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Container(
+      child: Center(
+        child: ListView.builder(
+            itemCount: tiposRescate.length,
+            itemBuilder: (BuildContext context, int index) {
+              return new InkWell(
+                //highlightColor: Colors.red,
+                splashColor: Colors.grey[300],
+                onTap: () {
+                  setState(() {
+                    tiposRescate
+                        .forEach((element) => element.isSelected = false);
+                    tiposRescate[index].isSelected = true;
+                    widget.tipoRescate = tiposRescate[index].text;
+                  });
+                },
+                child: new RadioItem(tiposRescate[index]),
+              );
+            }),
+      ),
+    ));
+  }
 }
